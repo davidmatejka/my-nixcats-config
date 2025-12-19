@@ -102,6 +102,10 @@ require('lze').load {
     },
   },
   {
+    "pyright",
+    lsp = { },
+  },
+  {
     "rnix",
     -- mason doesn't have nixd
     enabled = not catUtils.isNixCats,

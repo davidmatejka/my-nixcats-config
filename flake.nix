@@ -111,6 +111,7 @@
           fd
           xdotool # requ vimtex forward search
           pstree # better vimtex backwar search
+          pyright
         ];
         # these names are arbitrary.
         lint = with pkgs; [
