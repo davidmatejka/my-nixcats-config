@@ -2,12 +2,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
-vim.api.nvim_create_autocmd("FileType", {
-      pattern = "lua",
-      callback = function()
-          vim.keymap.set("x", "<leader>d", "<cmd>split | term nvim -l %<CR>", { noremap = true, silent = true, desc = 'Execute current lua file' })
-      end,
-    })
 -- vim.api.nvim_create_autocmd("FileType", {
 --       pattern = "tex",
 --       callback = function()
