@@ -1,7 +1,7 @@
 local M = {}
 
 -- Name des Output-Buffers
-local OUTPUT_BUF_NAME = "LuaRunnerOutput"
+local OUTPUT_BUF_NAME = "ScriptRunnerOutput"
 
 -- finde existierenden Output-Buffer oder erstelle ihn
 local function get_output_buf()
@@ -20,7 +20,7 @@ local function get_output_buf()
   vim.bo[buf].buftype = "nofile"
   vim.bo[buf].bufhidden = "hide"
   vim.bo[buf].swapfile = false
-  vim.bo[buf].filetype = "lua"
+  vim.bo[buf].filetype = "text"
 
   return buf
 end
@@ -41,10 +41,23 @@ local function open_output_window(buf)
   vim.api.nvim_win_set_height(win, 10)
 end
 
+-- Funktion zum Bestimmen des richtigen Interpreters
+local function get_interpreter(filetype)
+  if filetype == "lua" then
+    return "lua"
+  elseif filetype == "python" then
+    return "python3" -- oder "python", je nach System
+  else
+    return nil
+  end
+end
+
 function M.run_current_buffer()
-  -- nur Lua ausführen
-  if vim.bo.filetype ~= "lua" then
-    vim.notify("Kein Lua-Buffer", vim.log.levels.WARN)
+  local filetype = vim.bo.filetype
+  local valid_interpreter = get_interpreter(filetype)
+
+  if not valid_interpreter then
+    vim.notify("Unbekannter Dateityp: " .. filetype, vim.log.levels.WARN)
     return
   end
 
@@ -57,7 +70,7 @@ function M.run_current_buffer()
     return
   end
 
-    local current_win = vim.api.nvim_get_current_win()
+  local current_win = vim.api.nvim_get_current_win()
 
   local output_buf = get_output_buf()
   open_output_window(output_buf)
@@ -65,8 +78,8 @@ function M.run_current_buffer()
   -- Buffer leeren
   vim.api.nvim_buf_set_lines(output_buf, 0, -1, false, {})
 
-  -- Lua ausführen
-  vim.system({ "lua", file }, { text = true }, function(result)
+  -- Skript ausführen
+  vim.system({ valid_interpreter, file }, { text = true }, function(result)
     vim.schedule(function()
       local lines = {}
 
