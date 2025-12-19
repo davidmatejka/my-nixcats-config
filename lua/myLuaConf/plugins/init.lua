@@ -20,6 +20,12 @@ if ok then
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
 
+require('myLuaConf.plugins.executioner')
+
+vim.keymap.set("n", "<C-x>", function()
+  require('myLuaConf.plugins.executioner').run_current_buffer()
+end, { desc = "Lua Buffer ausführen" })
+
 require('lze').load {
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
