@@ -22,7 +22,7 @@ end
 
 require('myLuaConf.plugins.executioner')
 
-vim.keymap.set("n", "<C-x>", function()
+vim.keymap.set("n", "<leader>x", function()
   require('myLuaConf.plugins.executioner').run_current_buffer()
 end, { desc = "Lua Buffer ausführen" })
 

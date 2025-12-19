@@ -27,7 +27,6 @@ end
 
 -- öffne Window für Output-Buffer (oder nutze vorhandenes)
 local function open_output_window(buf)
-  -- prüfen ob Buffer bereits sichtbar ist
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_buf(win) == buf then
       vim.api.nvim_set_current_win(win)
@@ -38,6 +37,8 @@ local function open_output_window(buf)
   -- sonst neues Split-Window
   vim.cmd("botright split")
   vim.api.nvim_win_set_buf(0, buf)
+  local win = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_height(win, 10)
 end
 
 function M.run_current_buffer()
@@ -55,6 +56,8 @@ function M.run_current_buffer()
     vim.notify("Buffer muss gespeichert sein", vim.log.levels.ERROR)
     return
   end
+
+    local current_win = vim.api.nvim_get_current_win()
 
   local output_buf = get_output_buf()
   open_output_window(output_buf)
@@ -88,6 +91,8 @@ function M.run_current_buffer()
       vim.api.nvim_buf_set_lines(output_buf, 0, -1, false, lines)
     end)
   end)
+
+  vim.api.nvim_set_current_win(current_win)
 end
 
 return M
