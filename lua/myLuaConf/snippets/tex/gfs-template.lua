@@ -55,6 +55,7 @@ return {
 
 \paragraph{Sonstige Kompetenzen:} Vorbereitung und Termineinhaltung, Einbindung von Experimenten (nur Naturwissenschaften)
 
+\hfill \hrule
 
 \subsection*{Die folgenden Punkte können als besonders gelungen bewertet werden}
 \begin{itemize}
